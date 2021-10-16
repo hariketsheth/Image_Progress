@@ -25,6 +25,27 @@
                             progressUpdateCallback(parseInt((e.loaded / e.total) * 100));
                         }
                     };
+                    xhr.onloadend = function(){
+                        progressUpdateCallback(100);
+                        var options = {};
+                        var headers = xhr.getAllResponseHeaders();
+                        var typeMatch = headers.match(/^Content-Type\:\s*(.*?)$/mi);
+
+                        if(typeMatch && typeMatch[1]){
+                            options.type = typeMatch[1];
+                        }
+
+                        var blob = new Blob([this.response], options);
+
+                        resolve(window.URL.createObjectURL(blob));
+                    }
+                    xhr.send();
+                });
+            }
+
+            return imageLoader;
+        }
+
 
     </script>
 </body>
