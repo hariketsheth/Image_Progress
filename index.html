@@ -45,7 +45,19 @@
 
             return imageLoader;
         }
+        let myImage = document.getElementById('myImage');
+        let imageProgress = document.getElementById('imageProgress');
 
+        let imageLoader = GetImageLoader();
+
+        function updateProgress(progress){
+            imageProgress.value = progress;
+        }
+
+        imageLoader.LoadImage('image.jpg', updateProgress)
+                    .then(image => {
+                        myImage.src = image;
+                    });
 
     </script>
 </body>
